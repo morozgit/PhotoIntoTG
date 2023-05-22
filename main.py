@@ -1,9 +1,10 @@
 import os
 import requests
+from urllib.parse import urlparse
 
 
 def download_file(url, images_path):
-    filename = 'hubble.jpeg'
+    filename = 'hubble{0}'.format(cut_to_extension(url))
     response = requests.get(url)
     response.raise_for_status()
     with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
@@ -16,10 +17,16 @@ def fetch_spacex_last_launch(url, images_path):
     pictures = response.json()['links']['flickr']['original']
     for picture_number, picture in enumerate(pictures):
         response = requests.get(picture)
-        filename = 'Spacex_{0}.jpeg'.format(picture_number)
-        
+        filename = 'Spacex_{0}{1}'.format(picture_number, cut_to_extension(picture))       
         with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
             file.write(response.content)
+
+
+def cut_to_extension(url):
+    piece_of_url = urlparse(url)
+    piece_of_url_path = os.path.split(piece_of_url.path)
+    extension = os.path.splitext(piece_of_url_path[1])
+    return extension[1]
 
 
 def main():
