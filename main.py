@@ -42,7 +42,6 @@ def download_APOD(url, images_path, start_date):
         image_url = piece_of_nasa_response['hdurl']
         images_list.append(image_url)
         # print(image_url)
-        
     for image_number, image in enumerate(images_list):
         response = requests.get(image)
         filename = 'nasa_apod_{0}{1}'.format(image_number, cut_to_extension(image))       
@@ -51,17 +50,39 @@ def download_APOD(url, images_path, start_date):
             # print(image)
 
 
+def get_nasa_epic(url, images_path):
+    payload = {"api_key": "cZHYAr5rNUxpMhgz3FcbL2xeVshvbVAE51wTIgMz"}
+    response = requests.get(url + '/api/natural/images', params=payload)
+    response.raise_for_status()
+    nasa_epic_response = response.json()
+    # epic_images_list = []
+    for piece_of_nasa_epic_response in nasa_epic_response:
+        # image_url = (piece_of_nasa_epic_response['identifier'], piece_of_nasa_epic_response['image'])
+        images_data_time = piece_of_nasa_epic_response['date'].partition(' ')
+        images_data = images_data_time[0]
+        images_name = piece_of_nasa_epic_response['image']
+        response = requests.get(url + '/archive/natural/{0}/png/{1}.png'.format(images_data.replace('-', '/'), images_name), params=payload)
+        response.raise_for_status()
+        filename = 'nasa_epic_{0}_{1}.png'.format(images_data, images_data_time[2])
+        with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
+            file.write(response.content)
+        # print(response)
+
+
 def main():
     images_path = os.path.join(os.getcwd(), 'images')
     os.makedirs(images_path, exist_ok=True)
     url = 'https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg'
-    download_file(url, images_path)
+    # download_file(url, images_path)
     url_spacex = 'https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a'
-    fetch_spacex_last_launch(url_spacex, images_path)
+    # fetch_spacex_last_launch(url_spacex, images_path)
 
     url_APOD = 'https://api.nasa.gov/planetary/apod'
     start_date = "2023-05-15"
-    download_APOD(url_APOD, images_path, start_date)
+    # download_APOD(url_APOD, images_path, start_date)
+
+    url_nasa_epic = 'https://api.nasa.gov/EPIC'
+    get_nasa_epic(url_nasa_epic, images_path)
 
 
 if __name__ == '__main__':
