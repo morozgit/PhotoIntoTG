@@ -1,16 +1,16 @@
 import os
 from dotenv import load_dotenv, find_dotenv
-import datetime
+
 import requests
 
 
 
-def download_file(url, images_path):
-    filename = 'hubble{0}'.format(cut_to_extension(url))
-    response = requests.get(url)
-    response.raise_for_status()
-    with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
-        file.write(response.content)
+# def download_file(url, images_path):
+#     filename = 'hubble{0}'.format(cut_to_extension(url))
+#     response = requests.get(url)
+#     response.raise_for_status()
+#     with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
+#         file.write(response.content)
 
 
 
