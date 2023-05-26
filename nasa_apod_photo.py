@@ -1,8 +1,9 @@
 import requests
-from main import cut_to_extension
+from nasa_photo_api import cut_to_extension, make_images_dir
 
 
-def download_APOD(url, images_path, start_date, nasa_token):
+def download_APOD(url, start_date, nasa_token):
+    images_path = make_images_dir()
     payload = {"api_key": nasa_token, "start_date": start_date}
     response = requests.get(url, params=payload)
     response.raise_for_status()

@@ -1,5 +1,5 @@
 import requests
-from main import cut_to_extension
+from nasa_photo_api import cut_to_extension
 
 
 def fetch_spacex_last_launch(url, images_path, nasa_token):
