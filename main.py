@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
+import datetime
 import requests
 from urllib.parse import urlparse
 
@@ -16,7 +17,6 @@ def fetch_spacex_last_launch(url, images_path):
     response = requests.get(url)
     response.raise_for_status()
     pictures = response.json()['links']['flickr']['original']
-    print(pictures)
     for picture_number, picture in enumerate(pictures):
         response = requests.get(picture)
         filename = 'Spacex_{0}{1}'.format(picture_number, cut_to_extension(picture))       
@@ -78,7 +78,7 @@ def main():
     fetch_spacex_last_launch(url_spacex, images_path)
 
     url_APOD = 'https://api.nasa.gov/planetary/apod'
-    start_date = "2023-05-15"
+    start_date = datetime.datetime.today().strftime('%Y/%m/%d')
     download_APOD(url_APOD, images_path, start_date)
 
     url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
