@@ -52,21 +52,21 @@ def download_APOD(url, images_path, start_date):
 
 def get_nasa_epic(url, images_path):
     payload = {"api_key": "cZHYAr5rNUxpMhgz3FcbL2xeVshvbVAE51wTIgMz"}
-    response = requests.get(url + '/api/natural/images', params=payload)
+    response = requests.get(url, params=payload)
     response.raise_for_status()
     nasa_epic_response = response.json()
-    # epic_images_list = []
+    epic_images_list = []
     for piece_of_nasa_epic_response in nasa_epic_response:
-        # image_url = (piece_of_nasa_epic_response['identifier'], piece_of_nasa_epic_response['image'])
-        images_data_time = piece_of_nasa_epic_response['date'].partition(' ')
-        images_data = images_data_time[0]
+        # image_url = (piece_of_nasa_epic_response['date'], piece_of_nasa_epic_response['image'])
+        images_data = piece_of_nasa_epic_response['date'].partition(' ')[0].replace('-', '/')
         images_name = piece_of_nasa_epic_response['image']
-        response = requests.get(url + '/archive/natural/{0}/png/{1}.png'.format(images_data.replace('-', '/'), images_name), params=payload)
-        response.raise_for_status()
-        filename = 'nasa_epic_{0}_{1}.png'.format(images_data, images_data_time[2])
-        with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
-            file.write(response.content)
-        # print(response)
+        print(images_data)
+    #     response = requests.get(url + '/archive/natural/{0}/png/{1}.png'.format(images_data.replace('-', '/'), images_name), params=payload)
+    #     response.raise_for_status()
+    #     filename = 'nasa_epic_{0}_{1}.png'.format(images_data, images_data_time[2])
+    #     with open('{0}/{1}'.format(images_path, filename), 'wb') as file:
+    #         file.write(response.content)
+        
 
 
 def main():
@@ -81,7 +81,7 @@ def main():
     start_date = "2023-05-15"
     # download_APOD(url_APOD, images_path, start_date)
 
-    url_nasa_epic = 'https://api.nasa.gov/EPIC'
+    url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
     get_nasa_epic(url_nasa_epic, images_path)
 
 
