@@ -2,7 +2,8 @@ import requests
 from main import cut_to_extension
 
 
-def get_nasa_epic(url, images_path, payload):
+def get_nasa_epic(url, images_path, start_date, nasa_token):
+    payload = {"api_key": nasa_token, "start_date": start_date}
     response = requests.get(url, params=payload)
     response.raise_for_status()
     nasa_epic_response = response.json()

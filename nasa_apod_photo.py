@@ -2,8 +2,8 @@ import requests
 from main import cut_to_extension
 
 
-def download_APOD(url, images_path, start_date):
-    payload = {"api_key": "cZHYAr5rNUxpMhgz3FcbL2xeVshvbVAE51wTIgMz", "start_date" : start_date}
+def download_APOD(url, images_path, start_date, nasa_token):
+    payload = {"api_key": nasa_token, "start_date": start_date}
     response = requests.get(url, params=payload)
     response.raise_for_status()
     nasa_response = response.json()
