@@ -6,7 +6,7 @@ from nasa_photo_api import cut_to_extension, make_images_dir, get_nasa_token
 parser = argparse.ArgumentParser(
     description='Launch picture'
 )
-parser.add_argument('-lid', '--Launch_ID', help='Input Launch ID')
+parser.add_argument('-id', '--Launch_ID', help='Input Launch ID')
 args = parser.parse_args()
 launch_ID = args.Launch_ID
 nasa_token = get_nasa_token()

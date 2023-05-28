@@ -8,8 +8,7 @@ parser = argparse.ArgumentParser(
 )
 parser.add_argument('date_start', help='Input date YYYY-MM-DD')
 args = parser.parse_args()
-# nasa_token = get_nasa_token()
-nasa_token = 'DEMO_KEY'
+nasa_token = get_nasa_token()
 start_date = args.date_start
 url_apod = 'https://api.nasa.gov/planetary/apod'
 images_path = make_images_dir()
