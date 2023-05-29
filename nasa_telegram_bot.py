@@ -22,6 +22,7 @@ seconds = args.time * 60
 load_dotenv(find_dotenv())
 tg_token = os.environ.get("TG_TOKEN")
 telegram_NASA_bot = telegram.Bot(token=tg_token)
+chat_id_tg = os.environ.get("CHAT_ID")
 pictures_list = []
 directory = 'images'
 for address, dirs, picture in os.walk(directory):
@@ -30,7 +31,7 @@ for address, dirs, picture in os.walk(directory):
 while True:
     random.shuffle(picture)
     telegram_NASA_bot.send_document(
-        chat_id='@photo_nasa_channel',
+        chat_id=chat_id_tg,
         document=open('{0}/{1}'.format(directory, picture[0]), 'rb')
         )
     time.sleep(seconds)
