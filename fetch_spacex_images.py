@@ -1,22 +1,23 @@
 import requests
 import argparse
-from nasa_photo_api import cut_to_extension, make_images_dir, get_nasa_token
+from nasa_photo_api import cut_to_extension, make_images_dir
 
 
 parser = argparse.ArgumentParser(
     description='Launch picture'
 )
-parser.add_argument('-id', '--Launch_ID', help='Input Launch ID')
+parser.add_argument(
+    '-id',
+    '--launch_id',
+    help='Input Launch ID',
+    default='latest'
+    )
 args = parser.parse_args()
-launch_ID = args.Launch_ID
-nasa_token = get_nasa_token()
-if launch_ID:
-    url_spacex = 'https://api.spacexdata.com/v5/launches/{0}'.format(launch_ID)
-else:
-    url_spacex = 'https://api.spacexdata.com/v3/launches/latest'
+launch_id = args.launch_id
+spacex_url = 'https://api.spacexdata.com/v5/launches/{0}'.format(launch_id)
 images_path = make_images_dir()
 try:
-    response = requests.get(url_spacex)
+    response = requests.get(spacex_url)
     response.raise_for_status()
     pictures = response.json()['links']['flickr']['original']
     for picture_number, picture in enumerate(pictures):
