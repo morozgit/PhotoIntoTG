@@ -7,9 +7,9 @@ from dotenv import load_dotenv, find_dotenv
 def main():
     load_dotenv(find_dotenv())
     nasa_token = os.environ.get("NASA_TOKEN")
-    url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
+    nasa_epic_url = 'https://api.nasa.gov/EPIC/api/natural/images'
     payload = {"api_key": nasa_token}
-    response = requests.get(url_nasa_epic, params=payload)
+    response = requests.get(nasa_epic_url, params=payload)
     response.raise_for_status()
     nasa_epic_responses = response.json()
     epic_images = []
