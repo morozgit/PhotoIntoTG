@@ -11,9 +11,9 @@ def main():
     payload = {"api_key": nasa_token}
     response = requests.get(nasa_epic_url, params=payload)
     response.raise_for_status()
-    nasa_epic_responses = response.json()
+    nasa_epic_images_response = response.json()
     epic_images = []
-    for nasa_epic_response in nasa_epic_responses:
+    for nasa_epic_response in nasa_epic_images_response:
         images_data = nasa_epic_response['date'].partition(' ')[0].replace('-', '/')
         images_name = nasa_epic_response['image']
         archive_epic_images = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(images_data, images_name)
