@@ -13,9 +13,9 @@ def main():
     response.raise_for_status()
     nasa_epic_images_response = response.json()
     epic_images = []
-    for nasa_epic_response in nasa_epic_images_response:
-        images_data = nasa_epic_response['date'].partition(' ')[0].replace('-', '/')
-        images_name = nasa_epic_response['image']
+    for nasa_epic_image in nasa_epic_images_response:
+        images_data = nasa_epic_image['date'].partition(' ')[0].replace('-', '/')
+        images_name = nasa_epic_image['image']
         archive_epic_images = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(images_data, images_name)
         epic_images.append(archive_epic_images)
     for image_epic_number, image_epic in enumerate(epic_images):
