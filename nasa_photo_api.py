@@ -16,10 +16,10 @@ def cut_to_extension(url):
     return extension[1]
 
 
-def download_pictures(picture_number, picture):
-    response = requests.get(picture)
+def download_pictures(pictures_number, pictures):
+    response = requests.get(pictures)
     response.raise_for_status()
-    filename = 'Spacex_{0}{1}'.format(picture_number, cut_to_extension(picture))
+    filename = 'Spacex_{0}{1}'.format(pictures_number, cut_to_extension(pictures))
     with open('{0}/{1}'.format(make_images_dir(), filename), 'wb') as file:
         file.write(response.content)
 

@@ -18,11 +18,14 @@ def main():
     payload = {"api_key": nasa_token, "start_date": start_date}
     response = requests.get(apod_url, params=payload)
     response.raise_for_status()
-    nasa_responses = response.json()
+    nasa_response = response.json()
     images = []
-    for nasa_response in nasa_responses:
-        image_url = nasa_response['hdurl']
-        images.append(image_url)
+    for image_url in nasa_response:
+        try:
+            image_url = image_url['hdurl']
+            images.append(image_url)
+        except:
+            print('Images downloading')
 
     for image_number, image in enumerate(images):
         download_pictures(image_number, image)
