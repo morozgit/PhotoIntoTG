@@ -1,5 +1,5 @@
 import requests
-from nasa_photo_api import download_pictures
+from nasa_photo_api import download_picture
 import os
 from dotenv import load_dotenv, find_dotenv
 
@@ -19,7 +19,7 @@ def main():
         archive_epic_images = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(images_data, images_name)
         epic_images.append(archive_epic_images)
     for image_epic_number, image_epic in enumerate(epic_images):
-        download_pictures(image_epic_number, image_epic)
+        download_picture(image_epic_number, image_epic)
 
 
 if __name__ == '__main__':

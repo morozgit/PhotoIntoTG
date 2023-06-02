@@ -2,7 +2,7 @@ import argparse
 import requests
 import os
 from dotenv import load_dotenv, find_dotenv
-from nasa_photo_api import download_pictures
+from nasa_photo_api import download_picture
 
 
 def main():
@@ -24,11 +24,11 @@ def main():
         try:
             image_url = image_url['hdurl']
             images.append(image_url)
-        except:
+        except KeyError:
             print('Images downloading')
 
     for image_number, image in enumerate(images):
-        download_pictures(image_number, image)
+        download_picture(image_number, image)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import requests
 import argparse
-from nasa_photo_api import download_pictures
+from nasa_photo_api import download_picture
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
         response.raise_for_status()
         pictures = response.json()['links']['flickr']['original']
         for picture_number, picture in enumerate(pictures):
-            download_pictures(picture_number, picture)
+            download_picture(picture_number, picture)
     except requests.exceptions.HTTPError:
         print('Photo didn`t do')
 
